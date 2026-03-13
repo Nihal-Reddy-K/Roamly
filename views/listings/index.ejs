@@ -1,0 +1,107 @@
+<% layout("layouts/boilerplate") %>
+
+    <!-- <form method="GET" action="/listings/new">
+        <button>Create New Listing</button>
+    </form> -->
+<!-- <h2>All Listings:</h2> -->
+<div class="filters-tax-row">
+<div id="filters" class="d-flex align-items-center gap-4 flex-wrap mb-4">
+
+  <a href="/listings" class="filter <%= !category ? 'active-filter' : '' %>">
+    <i class="bi bi-grid"></i>
+    <p>All</p>
+  </a>
+
+  <a href="/listings?category=Trending" class="filter <%= category === 'Trending' ? 'active-filter' : '' %>">
+    <i class="bi bi-fire"></i>
+    <p>Trending</p>
+  </a>
+
+  <a href="/listings?category=Beach" class="filter <%= category === 'Beach' ? 'active-filter' : '' %>">
+    <i class="bi bi-water"></i>
+    <p>Beach</p>
+  </a>
+
+  <a href="/listings?category=Mountains" class="filter <%= category === 'Mountains' ? 'active-filter' : '' %>">
+    <i class="bi bi-triangle"></i>
+    <p>Mountains</p>
+  </a>
+
+  <a href="/listings?category=City" class="filter <%= category === 'City' ? 'active-filter' : '' %>">
+    <i class="bi bi-buildings"></i>
+    <p>City</p>
+  </a>
+
+  <a href="/listings?category=Camping" class="filter <%= category === 'Camping' ? 'active-filter' : '' %>">
+    <i class="bi bi-tree"></i>
+    <p>Camping</p>
+  </a>
+
+  <a href="/listings?category=Luxury" class="filter <%= category === 'Luxury' ? 'active-filter' : '' %>">
+    <i class="bi bi-gem"></i>
+    <p>Luxury</p>
+  </a>
+
+  <a href="/listings?category=Farms" class="filter <%= category === 'Farms' ? 'active-filter' : '' %>">
+    <i class="bi bi-flower1"></i>
+    <p>Farms</p>
+  </a>
+
+  <a href="/listings?category=Arctic" class="filter <%= category === 'Arctic' ? 'active-filter' : '' %>">
+    <i class="bi bi-snow"></i>
+    <p>Arctic</p>
+  </a>
+
+  <a href="/listings?category=Desert" class="filter <%= category === 'Desert' ? 'active-filter' : '' %>">
+    <i class="bi bi-brightness-high"></i>
+    <p>Desert</p>
+  </a>
+
+  <a href="/listings?category=Pool" class="filter <%= category === 'Pool' ? 'active-filter' : '' %>">
+    <i class="bi bi-droplet"></i>
+    <p>Pool</p>
+  </a>
+
+  <div class="tax-toggle">
+  <span class="tax-text">Display prices with taxes</span>
+
+  <label class="switch">
+    <input type="checkbox" id="taxSwitch">
+    <span class="slider"></span>
+  </label>
+  </div>
+</div>
+</div>
+
+<% if (allListings.length > 0) { %>
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+    <% for(let listing of allListings){ %>
+      <div class="col">
+        <a href="/listings/<%= listing._id %>" class="listings-link">
+          <div class="card h-100" style="width: 19rem;">
+            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_img">
+            <div class="card-img-overlay"></div>
+            <div class="card-body">
+              <p class="card-text">
+                <b><%= listing.title %></b> <br>
+                <span class="listing-price" data-price="<%= listing.price %>">
+                  &#8377;<%= listing.price.toLocaleString("en-IN") %>
+                </span>
+                <span class="tax-info"> / night</span>
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+    <% } %>
+  </div>
+<% } else { %>
+  <div class="text-center my-5">
+    <h4>No listings found</h4>
+    <p class="text-muted">Try a different search or category.</p>
+  </div>
+<% } %>
+
+<script src="/js/taxToggle.js"></script>
+
+
