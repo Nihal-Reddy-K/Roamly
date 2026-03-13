@@ -29,7 +29,7 @@ app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
-const dbUrl = process.env.ATLALDB_URL;
+const dbUrl = process.env.ATLASDB_URL;
 
 main().then(() => {
     console.log("Connected to DB");
@@ -41,7 +41,7 @@ async function main(){
     await mongoose.connect(dbUrl);
 }
 
-const store = MongoStore.createKrupteinAdapter({
+const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto:{
         secret:secret,
