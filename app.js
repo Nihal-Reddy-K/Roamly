@@ -2,6 +2,8 @@ if(process.env.NODE_ENV != "production"){
     require('dotenv').config();
 }
 
+const secret = process.env.SECRET || "fallbacksecret";
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -42,7 +44,7 @@ async function main(){
 const store = MongoStore.createKrupteinAdapter({
     mongoUrl: dbUrl,
     crypto:{
-        secret:process.env.SECRET,
+        secret:secret,
     },
     touchAfter:24*3600,
 })
@@ -53,7 +55,7 @@ store.on("error", () => {
 
 const sessionOptions = {
     store,
-    secret:process.env.SECRET,
+    secret:secret,
     resave:false,
     saveUninitialized:true,
     cookie:{
