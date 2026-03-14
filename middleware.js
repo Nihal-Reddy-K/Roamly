@@ -4,13 +4,12 @@ const { listingSchema, reviewSchema } = require("./schema.js");
 const ExpressError = require("./utils/ExpressError.js");
 
 module.exports.validateListing = (req, res, next) => {
-    let { error } = listingSchema.validate(req.body);
+    const { error } = listingSchema.validate(req.body);
     if (error) {
-        let errorMsg = error.details.map((el) => el.message).join(",");
+        const errorMsg = error.details.map((el) => el.message).join(", ");
         throw new ExpressError(400, errorMsg);
-    } else {
-        next();
     }
+    next();
 };
 
 module.exports.isLoggedIn = (req, res, next) => {

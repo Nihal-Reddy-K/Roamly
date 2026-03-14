@@ -66,6 +66,14 @@ module.exports.create = async (req,res,next) => {
         limit: 1
     })
     .send();
+
+    if (!req.file) {
+        throw new ExpressError(400, "Please upload an image.");
+    }
+
+    if (!response.body.features || response.body.features.length === 0) {
+        throw new ExpressError(400, "Invalid location.Please enter a valid place.");
+    }
     
     let url = req.file.path;
     let filename = req.file.filename;
