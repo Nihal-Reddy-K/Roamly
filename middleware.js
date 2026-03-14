@@ -4,6 +4,7 @@ const { listingSchema, reviewSchema } = require("./schema.js");
 const ExpressError = require("./utils/ExpressError.js");
 
 module.exports.validateListing = (req, res, next) => {
+    console.log("========== VALIDATELISTING HIT ==========");
     console.log("REQ.BODY =", req.body);
 
     const { error } = listingSchema.validate(req.body);
