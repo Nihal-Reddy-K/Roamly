@@ -49,15 +49,19 @@ const store = MongoStore.create({
     touchAfter:24*3600,
 });
 
-store.on("error", () => {
-    console.log("ERROR IN MONGO SESSION STORE!");
+store.on("error", (err) => {
+    console.log("ERROR IN MONGO SESSION STORE!", err);
 });
+
+if (process.env.NODE_ENV === "production") {
+    app.set("trust proxy", 1);
+}
 
 const sessionOptions = {
     store,
     secret:secret,
     resave:false,
-    saveUninitialized:true,
+    saveUninitialized:false,
     cookie:{
         expires:Date.now() + 24*3600*7*1000,
         maxAge:24*3600*7*1000,
@@ -76,6 +80,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res,next) => {
+    console.log("REQ.USER =", req.user);
+    console.log("AUTH =", req.isAuthenticated());
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currentUser = req.user || null;
@@ -96,6 +102,7 @@ app.use((err,req,res,next) => {
     res.status(statusCode).render("error.ejs",{err});
 });
 
-app.listen(8080, () => {
-    console.log("server is listening to port 8080");
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+    console.log(`server is listening to port ${port}`);
 });
