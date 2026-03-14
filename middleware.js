@@ -4,11 +4,15 @@ const { listingSchema, reviewSchema } = require("./schema.js");
 const ExpressError = require("./utils/ExpressError.js");
 
 module.exports.validateListing = (req, res, next) => {
+    console.log("REQ.BODY =", req.body);
+
     const { error } = listingSchema.validate(req.body);
     if (error) {
         const errorMsg = error.details.map((el) => el.message).join(", ");
+        console.log("VALIDATION FAILED:", errorMsg);
         throw new ExpressError(400, errorMsg);
     }
+
     next();
 };
 
