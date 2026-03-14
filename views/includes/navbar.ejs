@@ -34,15 +34,13 @@
            </label>
         </div>
 
-        <%if(!locals.currentUser){%>
+      <% if (!currentUser) { %>
           <a class="nav-link" href="/signup">Sign Up</a>
           <a class="nav-link" href="/login">Log in</a>
-        <%}%>
-
-        <%if(locals.currentUser){%>
-          <a class="nav-link" href="/logout">Log out</a>
-        <%}%>
+      <% } else { %>
+            <a class="nav-link" href="/logout">Log out</a>
+      <% } %>
       </div>
     </div>
   </div>
-</nav>
+</nav> 
